@@ -1,0 +1,22 @@
+{
+  "name": "piro-assignment",
+  "version": "1.0.0",
+  "description": "pirogramming assginment3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pirogramming-semester/3rd-assignment.git"
+  },
+  "author": "changhoi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pirogramming-semester/3rd-assignment/issues"
+  },
+  "homepage": "https://github.com/pirogramming-semester/3rd-assignment#readme",
+  "dependencies": {
+    "gh-pages": "^2.1.1"
+  }
+}
