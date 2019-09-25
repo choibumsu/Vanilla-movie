@@ -104,12 +104,10 @@ function cardWidthResize(matching) {
 }
 
 function cardWidth(card, matching) {
-	if (matching) {
+	if (matching)
 		card.style.width = "92.5%";
-	}
-	else {
+	else 
 		card.style.width = "40%";
-	}
 }
 
 function cardStyle(card) {
@@ -135,12 +133,10 @@ function posterWidthResize(matching) {
 }
 
 function posterWidth(poster, matching) {
-	if (matching) {
+	if (matching) 
 		poster.style.width = "100%";
-	}
-	else {
+	else 
 		poster.style.width = "30%";
-	}
 }
 
 function posterStyle(poster) {
