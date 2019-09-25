@@ -2,9 +2,11 @@
   "name": "piro-assignment",
   "version": "1.0.0",
   "description": "pirogramming assginment3",
+  "homepage": "https://choibumsu.github.io/3rd-assignment",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d ./"
   },
   "repository": {
     "type": "git",
@@ -15,8 +17,8 @@
   "bugs": {
     "url": "https://github.com/pirogramming-semester/3rd-assignment/issues"
   },
-  "homepage": "https://github.com/pirogramming-semester/3rd-assignment#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "gh-pages": "^2.1.1"
   }
 }
