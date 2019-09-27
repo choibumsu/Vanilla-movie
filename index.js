@@ -57,8 +57,7 @@ function setCard(movie) {
 
 	const card = document.createElement("div");
 	card.append(img, cardBoby);
-	card.onclick = function() { location.href = `./detail.html?${movie.id}`; };
-	console.log("click");
+	card.onclick = function() { location.href = `./detail.html?id=${movie.id}`; };
 	cardStyle(card);
 
 	return card;

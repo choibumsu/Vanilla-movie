@@ -1,31 +1,38 @@
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 window.onload = async () => {
-	bodyStyle();
+    bodyStyle();
+    
+    const app = document.querySelector("#app");
+    const loading = document.createElement("div");
+    loading.innerText = "Loading...";
+    app.appendChild(loading);
+    id = getParameterByName('id');
 
-	const app = document.querySelector("#app");
-	const loading = document.createElement("div");
-	loading.innerText = "Loading...";
-	app.appendChild(loading);
-	const main = async () => {
-		const {
-			data: {
-				data: { movies: movies }
-			}
-		} = await axios.get(
-			`https://yts.lt/api/v2/list_movies.json?sort_by=like_count`
-		);
-		app.removeChild(loading);
-		appStyle(app);
-		addCard(movies, app);
-	};
+    const main = async () => {
+        const {
+            data: {
+                data: { movie: movie }
+            }
+        } = await axios.get(
+            `https://yts.lt/api/v2/movie_details.json?movie_id=${id}`
+        );
+        app.removeChild(loading);
+        appStyle(app);
+		addMovie(movie, app);
+    };
 
-	await main();
+    await main();
 };
 
-function addCard(movies, app) {
-	for (let i = 0; i < movies.length; i++) {
-		const card = setCard(movies[i]);
-		app.appendChild(card);
-	}
+function addMovie(movie, app) {
+    const card = setCard(movie);
+    app.appendChild(card);
 }
 
 function setCard(movie) {
@@ -48,7 +55,7 @@ function setCard(movie) {
 	genreWrapStyle(genres);
 
 	const desc = document.createElement("p");
-	desc.innerText = movie.summary;
+	desc.innerText = movie.description_full;
 	descStyle(desc);
 
 	const cardBoby = document.createElement("div");
@@ -57,7 +64,7 @@ function setCard(movie) {
 
 	const card = document.createElement("div");
 	card.append(img, cardBoby);
-	card.onclick = function() { location.href = `./detail.html?${movie.id}`; };
+	/* card.onclick = function() { location.href = `./detail.html?id=${movie.id}`; }; */
 	cardStyle(card);
 
 	return card;
@@ -137,7 +144,7 @@ function posterWidth(poster, matching) {
 	if (matching) 
 		poster.style.width = "100%";
 	else 
-		poster.style.width = "30%";
+		poster.style.width = "50%";
 }
 
 function posterStyle(poster) {
@@ -177,8 +184,5 @@ function genreWrapStyle(genres) {
 function descStyle(desc) {
 	desc.style.color = "#b4b5bd";
 	desc.style.overflow = "hidden";
-	desc.style.textOverflow = "ellipsis";
-	desc.style.overflow = "hidden";
-	desc.style.whiteSpace = "nowrap";
 	desc.style.margin = "0";
 }
