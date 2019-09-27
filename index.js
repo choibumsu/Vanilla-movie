@@ -1,6 +1,4 @@
 window.onload = async () => {
-	bodyStyle();
-
 	const app = document.querySelector("#app");
 	const loading = document.createElement("div");
 	loading.innerText = "Loading...";
@@ -14,6 +12,7 @@ window.onload = async () => {
 			`https://yts.lt/api/v2/list_movies.json?sort_by=like_count`
 		);
 		app.removeChild(loading);
+		bodyStyle();
 		appStyle(app);
 		addCard(movies, app);
 	};
@@ -57,7 +56,7 @@ function setCard(movie) {
 
 	const card = document.createElement("div");
 	card.append(img, cardBoby);
-	card.onclick = function() { location.href = `./detail.html?id=${movie.id}`; };
+	card.onclick = function () { location.href = `./detail.html?id=${movie.id}`; };
 	cardStyle(card);
 
 	return card;
@@ -71,6 +70,8 @@ function bodyStyle() {
 
 	body.style.margin = "0px";
 	body.style.fontFamily = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif";
+	body.style.minHeight = "100vh";
+	body.style.backgroundColor = "#eff3f7";
 }
 
 function appStyle(app) {
@@ -79,7 +80,6 @@ function appStyle(app) {
 	app.style.justifyContent = "space-around";
 	app.style.flexWrap = "wrap";
 	app.style.fontSize = "14px";
-	app.style.backgroundColor = "#eff3f7";
 }
 
 /*
@@ -107,7 +107,7 @@ function cardWidthResize(matching) {
 function cardWidth(card, matching) {
 	if (matching)
 		card.style.width = "92.5%";
-	else 
+	else
 		card.style.width = "40%";
 }
 
@@ -134,9 +134,9 @@ function posterWidthResize(matching) {
 }
 
 function posterWidth(poster, matching) {
-	if (matching) 
+	if (matching)
 		poster.style.width = "100%";
-	else 
+	else
 		poster.style.width = "30%";
 }
 
