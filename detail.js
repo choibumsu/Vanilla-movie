@@ -35,89 +35,141 @@ function addMovie(movie, app) {
 }
 
 function setCard(movie) {
+    const img = setPoster(movie.large_cover_image, movie.url);
+
+    const cardBoby = setCardBody(movie);
+
+    const card = document.createElement("div");
+    card.append(img, cardBoby);
+    cardStyle(card);
+    card.classList.add("movie-card");
+
+    return card;
+}
+
+function setPoster(imgSrc, urlValue) {
     const img = document.createElement("img");
-    img.src = movie.large_cover_image;
-    img.onclick = function() { window.open(`${movie.url}`); };
+    img.src = imgSrc;
+    img.onclick = function () { window.open(`${urlValue}`); };
+    img.classList.add("poster");
     posterStyle(img);
 
+    return img;
+}
+
+function setRating(ratingValue) {
     const ratingWrap = document.createElement("div");
-    for (let i = 0; i < parseInt(movie.rating); i++) {
+
+    for (let i = 0; i < ratingValue; i++) {
         const starIcon = document.createElement("i");
         starIcon.classList.add('fas', 'fa-star');
-        starIcon.style.color = "gold";
-        starIcon.style.fontSize = "20px";
+        starIconStyle(starIcon);
+
         ratingWrap.append(starIcon);
     }
-    const underDot = movie.rating % 1;
+    const underDot = ratingValue % 1;
     if (underDot >= 0.5) {
         const halfStarIcon = document.createElement("i");
         halfStarIcon.classList.add('fas', 'fa-star-half');
-        halfStarIcon.style.color = "gold";
-        halfStarIcon.style.fontSize = "20px";
+        starIconStyle(halfStarIcon);
+
         ratingWrap.append(halfStarIcon);
     }
     const rating = document.createElement("span");
-    rating.innerText = "(" + movie.rating + ")";
-    rating.style.marginLeft = "5px";
-    ratingWrap.append(rating);
-    ratingWrap.style.display = "flex";
-    ratingWrap.style.alignItems = "center";
+    rating.innerText = "(" + ratingValue + ")";
+    ratingStyle(rating);
 
+    ratingWrap.append(rating);
+    ratingWrapStyle(ratingWrap);
+
+    return ratingWrap;
+}
+
+function setTitle(titleValue, urlValue) {
     const title = document.createElement("h1");
     const titleAtag = document.createElement("a");
-    titleAtag.innerText = movie.title_long;
-    titleAtag.href = `${movie.url}`;
+
+    titleAtag.innerText = titleValue;
+    titleAtag.href = `${urlValue}`;
     titleAtag.target = "_blank";
-    titleAtag.style.textDecoration = "none";
-    titleAtag.style.color = "black";
+    titleAtagStyle(titleAtag);
+
     title.append(titleAtag);
     titleStyle(title);
 
-    const runTimeWrap = document.createElement("div");
-    const clockIcon = document.createElement("i");
-    const runTime = document.createElement("span");
-    clockIcon.classList.add('far', 'fa-clock');
-    clockIcon.style.marginRight = "5px";
-    runTime.innerText = `${movie.runtime}`;
-    runTimeWrap.append(clockIcon, runTime);
-    runTimeWrap.style.marginBottom = "10px";
+    return title;
+}
 
+function setRunTime(runTimeValue) {
+    const runTimeWrap = document.createElement("div");
+    
+    const clockIcon = document.createElement("i");
+    clockIcon.classList.add('far', 'fa-clock');
+    clockIconStyle(clockIcon);
+
+    const runTime = document.createElement("span");
+    runTime.innerText = runTimeValue;
+    runTimeWrap.append(clockIcon, runTime);
+    runTimeWrapStyle(runTimeWrap);
+
+    return runTimeWrap;
+}
+
+function setGenres(genreList) {
     const genres = document.createElement("div");
-    for (let j = 0; j < movie.genres.length; j++) {
+    for (let j = 0; j < genreList.length; j++) {
         const genre = document.createElement("p");
-        genre.innerText = movie.genres[j];
+        genre.innerText = genreList[j];
         genreStyle(genre);
 
         genres.append(genre);
     }
     genreWrapStyle(genres);
 
-    const desc = document.createElement("p");
-    desc.innerText = movie.description_full;
-    descStyle(desc);
-
-    const ytButton = document.createElement("button");
-    ytButton.innerText = "See Trailer";
-    ytButton.onclick = function () { window.open(`https://www.youtube.com/watch?v=${movie.yt_trailer_code}`); };
-    ytButton.target = "_blank";
-    ytButton.style.marginTop = "20px";
-    ytButton.style.backgroundColor = "#eff3f7";
-    ytButton.style.textDecoration = "none";
-    ytButton.style.border = "1px solid #cccccc";
-    ytButton.style.padding = "15px 32px";
-    ytButton.style.boxShadow = "3px 3px 8px hsla(0,0%,52.2%,.3)";
-
-    const cardBoby = document.createElement("div");
-    cardBoby.append(ratingWrap, title, runTimeWrap, genres, desc, ytButton)
-    cardBodyStyle(cardBoby);
-
-    const card = document.createElement("div");
-    card.append(img, cardBoby);
-    cardStyle(card);
-
-    return card;
+    return genres;
 }
 
+function setDesc(description) {
+    const desc = document.createElement("p");
+
+    desc.innerText = description;
+    descStyle(desc);
+
+    return desc;
+}
+
+function setYtBtn(ytLink) {
+    const ytBtn = document.createElement("button");
+
+    ytBtn.innerText = "See Trailer";
+    ytBtn.onclick = function () { window.open(`https://www.youtube.com/watch?v=${ytLink}`); };
+    ytBtn.target = "_blank";
+    ytBtnStyle(ytBtn);
+
+    return ytBtn;
+}
+
+function setCardBody(movie) {
+    const ratingWrap = setRating(parseInt(movie.rating));
+
+    const title = setTitle(movie.title_long, movie.url);
+
+    const runTimeWrap = setRunTime(movie.runtime);
+
+    const genres = setGenres(movie.genres);
+
+    const desc = setDesc(movie.description_full);
+
+    const ytBtn = setYtBtn(movie.yt_trailer_code);
+
+    const cardBoby = document.createElement("div");
+
+    cardBoby.append(ratingWrap, title, runTimeWrap, genres, desc, ytBtn);
+    cardBoby.classList.add("card-body");
+    cardBodyStyle(cardBoby);
+
+    return cardBoby
+}
 /* style */
 
 // boay 와 app 스타일 초기화
@@ -144,79 +196,143 @@ function appStyle(app) {
 resize 이벤트 핸들러 
 반응형을 위한 이벤트
 */
-var mql = window.matchMedia("screen and (min-width: 320px) and (max-width: 667px) ");
-mql.addListener(handleSmSize);
+var mqlSm = window.matchMedia("screen and (min-width: 320px) and (max-width: 667px) ");
+var mqlMd = window.matchMedia("screen and (min-width: 768px) and (max-width: 991px) ");
+var mqlLg = window.matchMedia("screen and (min-width: 992px) and (max-width: 1199px) ");
+var mqlXlg = window.matchMedia("screen and (min-width: 1200px)");
+mqlSm.addListener(handleScreenSize);
+mqlMd.addListener(handleScreenSize);
+mqlLg.addListener(handleScreenSize);
+mqlXlg.addListener(handleScreenSize);
 
 //반응이 일어나는 부분 == 포스터 사이즈와 카드 사이즈
-function handleSmSize() {
-    cardBodyWidthResize(mql.matches);
-    posterWidthResize(mql.matches);
+function handleScreenSize() {
+    cardWidthResize();
+    cardBodyWidthResize();
+    posterWidthResize();
 }
 
 //모든 카드들이 width를 조절하는 함수를 호출함
-function cardStyle(card) {
-    card.classList.add("movie-card");
+function cardWidthResize() {
+    const cards = document.querySelectorAll(".movie-card");
 
-    card.style.width = "100%";
+    cards.forEach(card => {
+        cardWidth(card);
+    });
+}
+
+function cardWidth(card) {
+    sm = mqlSm.matches;
+    md = mqlMd.matches;
+    lg = mqlLg.matches;
+    xlg = mqlXlg.matches;
+
+    if (xlg)
+        card.style.width = "60%";
+    else if (lg)
+        card.style.width = "80%";
+    else
+        card.style.width = "100%";
+}
+
+function cardStyle(card) {
+    cardWidth(card);
     card.style.display = "flex";
     card.style.flexWrap = "wrap";
     card.style.justifyContent = "space-around";
-    card.style.alignItems = "flex-start";
+    card.style.alignItems = "center";
     card.style.padding = "0 20px";
     card.style.backgroundColor = "white";
     card.style.boxShadow = "0 8px 38px hsla(0,0%,52.2%,.3), 0 5px 12px hsla(0,0%,52.2%,.22)";
 }
 
-function posterWidthResize(matching) {
+function posterWidthResize() {
     const posters = document.querySelectorAll(".poster");
 
     posters.forEach(poster => {
-        posterWidth(poster, matching)
+        posterWidth(poster)
     });
 }
 
-function posterWidth(poster, matching) {
-    if (matching)
-        poster.style.width = "100%";
+function posterWidth(poster) {
+    sm = mqlSm.matches;
+    md = mqlMd.matches;
+    lg = mqlLg.matches;
+    xlg = mqlXlg.matches;
+
+    if (xlg || lg)
+        poster.style.width = "40%";
+    else if (md)
+        poster.style.width = "50%";
     else
-        poster.style.width = "30%";
+        poster.style.width = "90%";
 }
 
 function posterStyle(poster) {
-    poster.classList.add("poster");
-
-    posterWidth(poster, mql.matches);
+    posterWidth(poster);
     poster.style.maxWidth = "100%";
     poster.style.position = "relative";
     poster.style.top = "-20px";
     poster.style.boxShadow = "-10px 19px 38px rgba(83,83,83,.3), 10px 15px 12px rgba(80,80,80,.22)";
 }
 
-function cardBodyWidthResize(matching) {
+function cardBodyWidthResize() {
     const cardBodies = document.querySelectorAll(".card-body");
 
     cardBodies.forEach(cardBody => {
-        cardBodyStyleWidth(cardBody, matching)
+        cardBodyStyleWidth(cardBody)
     });
 }
 
-function cardBodyStyleWidth(cardBody, matching) {
-    if (matching)
-        cardBody.style.width = "100%";
+function cardBodyStyleWidth(cardBody) {
+    sm = mqlSm.matches;
+    md = mqlMd.matches;
+    lg = mqlLg.matches;
+    xlg = mqlXlg.matches;
+
+    if (xlg || lg)
+        cardBody.style.width = "50%";
+    else if (md)
+        cardBody.style.width = "40%";
     else
-        cardBody.style.width = "60%";
+        cardBody.style.width = "100%";
 }
 
 function cardBodyStyle(cardBoby) {
-    cardBoby.classList.add("card-body");
-
-    cardBodyStyleWidth(cardBoby, mql.matches)
+    cardBodyStyleWidth(cardBoby)
     cardBoby.style.padding = "20px 0";
+}
+
+function starIconStyle(starIcon) {
+    starIcon.style.color = "gold";
+    starIcon.style.fontSize = "20px";
+}
+
+function ratingStyle(rating) {
+    rating.style.marginLeft = "5px";
+}
+
+function ratingWrapStyle(ratingWrap) {
+    ratingWrap.style.display = "flex";
+    ratingWrap.style.alignItems = "center";
+}
+
+function titleAtagStyle(titleAtag) {
+    titleAtag.style.textDecoration = "none";
+    titleAtag.style.color = "black";
 }
 
 function titleStyle(title) {
     title.style.fontSize = "20px";
     title.style.fontWeight = "600";
+}
+
+function clockIconStyle(clockIcon) {
+    clockIcon.style.marginRight = "5px";
+}
+
+function runTimeWrapStyle(runTimeWrap) {
+    runTimeWrap.style.marginBottom = "10px";
 }
 
 function genreStyle(genre) {
@@ -235,4 +351,13 @@ function descStyle(desc) {
     desc.style.color = "#b4b5bd";
     desc.style.overflow = "hidden";
     desc.style.margin = "0";
+}
+
+function ytBtnStyle(ytBtn) {
+    ytBtn.style.marginTop = "20px";
+    ytBtn.style.backgroundColor = "#eff3f7";
+    ytBtn.style.textDecoration = "none";
+    ytBtn.style.border = "1px solid #cccccc";
+    ytBtn.style.padding = "13px 26px";
+    ytBtn.style.boxShadow = "3px 3px 8px hsla(0,0%,52.2%,.3)";
 }
