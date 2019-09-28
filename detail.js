@@ -24,10 +24,26 @@ window.onload = async () => {
         bodyStyle();
         appStyle(app);
         addMovie(movie, app);
+        addBackBtn(app);
     };
 
     await main();
 };
+
+function addBackBtn(app) {
+    const backBtn = document.createElement("button");
+    backBtn.onclick = function () { location.href="./index.html"; };
+    backBtn.innerHTML = '<i class="fas fa-home"></i>';
+
+    backBtn.style.position = "absolute";
+    backBtn.style.right = "20px";
+    backBtn.style.top = "20px";
+    backBtn.style.fontSize = "20px";
+    backBtn.style.textDecoration = "none";
+    backBtn.style.border = "none";
+    backBtn.style.backgroundColor = "#eff3f7";
+    app.appendChild(backBtn);
+}
 
 function addMovie(movie, app) {
     const card = setCard(movie);
@@ -102,7 +118,7 @@ function setTitle(titleValue, urlValue) {
 
 function setRunTime(runTimeValue) {
     const runTimeWrap = document.createElement("div");
-    
+
     const clockIcon = document.createElement("i");
     clockIcon.classList.add('far', 'fa-clock');
     clockIconStyle(clockIcon);
