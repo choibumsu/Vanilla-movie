@@ -9,7 +9,7 @@ window.onload = async () => {
 				data: { movies: movies }
 			}
 		} = await axios.get(
-			`https://yts.lt/api/v2/list_movies.json?sort_by=like_count`
+			`https://yts.mx/api/v2/list_movies.json?sort_by=like_count`
 		);
 		app.removeChild(loading);
 		bodyStyle();
