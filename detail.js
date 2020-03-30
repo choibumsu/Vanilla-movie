@@ -18,7 +18,7 @@ window.onload = async () => {
                 data: { movie: movie }
             }
         } = await axios.get(
-            `https://yts.lt/api/v2/movie_details.json?movie_id=${id}`
+            `https://yts.mx/api/v2/movie_details.json?movie_id=${id}`
         );
         app.removeChild(loading);
         bodyStyle();
