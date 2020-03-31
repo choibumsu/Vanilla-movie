@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pirogramming-semester/3rd-assignment.git"
+    "url": "git+https://github.com/choibumsu/3rd-assignment.git"
   },
   "author": "changhoi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pirogramming-semester/3rd-assignment/issues"
+    "url": "https://github.com/choibumsu/3rd-assignment/issues"
   },
   "dependencies": {},
   "devDependencies": {
